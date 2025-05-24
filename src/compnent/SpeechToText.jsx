@@ -1,6 +1,8 @@
 import React, { useState, useRef } from 'react';
 import axios from 'axios';
 
+const API_URL = process.env.REACT_APP_API_URL;
+
 function SpeechToText() {
   const [isRecording, setIsRecording] = useState(false);
   const [transcription, setTranscription] = useState('');
@@ -8,6 +10,8 @@ function SpeechToText() {
   const [error, setError] = useState('');
   const mediaRecorderRef = useRef(null);
   const audioChunksRef = useRef([]);
+
+
 
   const startRecording = async () => {
     setError('');
@@ -35,7 +39,7 @@ function SpeechToText() {
         formData.append('audio', audioBlob, 'recording.webm');
 
         try {
-          const response = await axios.post('http://localhost:8000/api/transcription/upload', formData, {
+          const response = await axios.post(`${API_URL}/api/transcription/upload`, formData, {
             headers: { 'Content-Type': 'multipart/form-data' },
           });
 

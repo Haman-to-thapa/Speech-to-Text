@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
+const API_URL = process.env.REACT_APP_API_URL;
+
 function WhisperTest() {
   const [file, setFile] = useState(null);
   const [transcription, setTranscription] = useState('');
@@ -30,7 +32,7 @@ function WhisperTest() {
       const formData = new FormData();
       formData.append('audio', file);
 
-      const res = await axios.post('http://localhost:8000/transcribe', formData, {
+      const res = await axios.post(`${API_URL}/api/transcription/transcribe`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },

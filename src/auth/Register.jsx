@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
+
+const API_URL = process.env.REACT_APP_API_URL;
+
 const Register = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -12,7 +15,7 @@ const Register = () => {
     setError('');
 
     try {
-      const res = await fetch('http://localhost:8000/api/routes/register', {
+      const res = await fetch(`${API_URL}/api/routes/register`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

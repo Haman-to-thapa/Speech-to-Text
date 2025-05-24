@@ -4,6 +4,19 @@ import { Link, useNavigate } from 'react-router-dom';
 
 const Login = () => {
 
+  const API_URL = process.env.REACT_APP_API_URL;
+
+  // Example fetch call
+  fetch(`${API_URL}/api/routes/login`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    credentials: 'include',
+    body: JSON.stringify({ email, password }),
+  });
+
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
@@ -15,7 +28,7 @@ const Login = () => {
 
     try {
 
-      const res = await fetch('http://localhost:8000/api/routes/login', {
+      const res = await fetch(`${API_URL}/api/routes/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'  // must be set for JSON body parsing
