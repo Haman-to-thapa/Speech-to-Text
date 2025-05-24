@@ -1,58 +1,40 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
-const API_URL = process.env.REACT_APP_API_URL;
 const Login = () => {
-
-
-
-  // Example fetch call
-  fetch(`${API_URL}/api/routes/login`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    credentials: 'include',
-    body: JSON.stringify({ email, password }),
-  });
-
+  const API_URL = process.env.REACT_APP_API_URL;
 
   const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('')
-  const [error, setError] = useState('')
-  const navigate = useNavigate()
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
     setError('');
 
     try {
-
       const res = await fetch(`${API_URL}/api/routes/login`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'  // must be set for JSON body parsing
-        },
-        credentials: 'include', // if you want cookies
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
         body: JSON.stringify({ email, password }),
-      })
+      });
 
-      const data = await res.json()
+      const data = await res.json();
 
       if (!res.ok) {
         setError(data.error || 'Something went wrong');
         return;
       }
+
       localStorage.setItem('token', 'loggedIn');
       navigate('/');
-    } catch (error) {
+    } catch (err) {
       console.error(err);
       setError('Network error. Please try again.');
     }
-
-
-
-  }
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
@@ -82,16 +64,15 @@ const Login = () => {
           >
             Login
           </button>
-          <div className="">
-            <Link to='/register'>
-              you have not account <span className='text-blue-700 underline hover:scale-105 cursor-pointer'>Sign Up</span>
+          <div>
+            <Link to="/register">
+              You don't have an account? <span className="text-blue-700 underline hover:scale-105 cursor-pointer">Sign Up</span>
             </Link>
-
           </div>
         </form>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Login
+export default Login;
