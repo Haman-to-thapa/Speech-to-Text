@@ -21,10 +21,15 @@ const Login = () => {
         body: JSON.stringify({ email, password }),
       });
 
-      const data = await res.json();
+      // Avoid JSON parsing errors on empty responses
+      let data = {};
+      const contentType = res.headers.get('content-type');
+      if (contentType && contentType.includes('application/json')) {
+        data = await res.json();
+      }
 
       if (!res.ok) {
-        setError(data.error || 'Something went wrong');
+        setError(data?.error || 'Login failed');
         return;
       }
 
